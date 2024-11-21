@@ -1,0 +1,54 @@
+.game {
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+  margin: 100px auto;
+  padding: 20px;
+  border: 1px solid black;
+}
+
+.game-info {
+  margin-bottom: 10px;
+}
+
+.game-field {
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  grid-template-rows: repeat(3, 30px);
+  padding: 1px 0 0 1px;
+  margin-bottom: 10px;
+}
+
+.cell {
+  border: 1px solid gray;
+  margin: -1px 0 0 -1px;
+  background-color: white;
+}
+
+.cell--win {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.symbol {
+  font-size: 18px;
+}
+
+.symbol--x {
+  color: red;
+}
+
+.symbol--o {
+  color: green;
+}
+
+.reset {
+  background-color: #fff;
+  padding: 4px 5px;
+  border: 1px solid rgb(130, 129, 129);
+  border-radius: 5px;
+
+  cursor: pointer;
+}
