@@ -5,7 +5,7 @@ export const GAME_SYMBOLS = {
     SQUARE: 'square',
 }
 
-export const GAME_ORDER = [
+export const MOVE_ORDER = [
     GAME_SYMBOLS.CROSS,
     GAME_SYMBOLS.ZERO,
     GAME_SYMBOLS.TRIANGLE,

@@ -4,11 +4,8 @@ import React from "react";
 //Комопоненты
 import { GameSymbol } from './'
 import { UiButton } from "../uikit/ui-button";
-import { useGameState } from "./use-game-state";
 
-export function GameField({ className, playersCount }) {
-
-    const { cells, currentMove, nextMove, handleCellClick } = useGameState(playersCount);
+export function GameField({ className, playersCount, cells, nextMove, currentMove, handleCellClick, winnerSequence }) {
 
     const actions = <>
         <UiButton size="md" variant="primary">Ничья</UiButton>
@@ -20,7 +17,7 @@ export function GameField({ className, playersCount }) {
             <GameMoveInfo actions={actions} currentMove={currentMove} nextMove={nextMove} />
             <GameGrid>
                 {cells.map((symbol, i) =>
-                    <GameCell onClick={() => handleCellClick(i)} key={i}>
+                    <GameCell onClick={() => handleCellClick(i)} key={i} isWinner={winnerSequence?.includes(i)}>
                         {symbol && <GameSymbol symbol={symbol} className='w-5 h-5' />}
                     </GameCell>)}
             </GameGrid>
@@ -61,11 +58,11 @@ function GameGrid({ children }) {
     )
 }
 
-function GameCell({ children, onClick }) {
+function GameCell({ children, onClick, isWinner }) {
     return (
         <button
             onClick={onClick}
-            className="border border-slate-200 -ml-px -mt-px flex items-center justify-center"
+            className={clsx("border border-slate-200 -ml-px -mt-px flex items-center justify-center", isWinner && 'bg-lime-500/20')}
         >
             {children}
         </button>
