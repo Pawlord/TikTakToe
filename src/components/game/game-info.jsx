@@ -44,7 +44,7 @@ const players = [
     }
 ]
 
-export function GameInfo({ className, playersCount, currentMove }) {
+export function GameInfo({ className, playersCount, currentMove, isWinner, onPlayerTimeOver }) {
     return (
         <div className={clsx(className, 'bg-white rounded-2xl shadow-md px-8 py-4 justify-between grid grid-cols-2 gap-3 ')}>
             {players.slice(0, playersCount).map(player => (
@@ -52,15 +52,16 @@ export function GameInfo({ className, playersCount, currentMove }) {
                     key={player.id}
                     playerInfo={player}
                     isRight={player.id % 2 === 0}
-                    isTimerRunning={currentMove === player.symbol}
+                    isTimerRunning={currentMove === player.symbol && !isWinner}
+                    onTimeOver={() => onPlayerTimeOver(player.symbol)}
                 />
             ))}
         </div >
     )
 }
 
-function PlayerInfo({ playerInfo, isRight, isTimerRunning }) {
-    const [seconds, setSeconds] = React.useState(60);
+function PlayerInfo({ playerInfo, isRight, isTimerRunning, onTimeOver }) {
+    const [seconds, setSeconds] = React.useState(30);
 
     const minutesString = String(Math.floor(seconds / 60)).padStart(2, '0');
     const secondsString = String(Math.floor(seconds % 60)).padStart(2, '0');
@@ -75,10 +76,16 @@ function PlayerInfo({ playerInfo, isRight, isTimerRunning }) {
 
             return () => {
                 clearInterval(interval)
-                setSeconds(60)
+                setSeconds(30)
             }
         }
     }, [isTimerRunning])
+
+    React.useEffect(() => {
+        if (seconds === 0) {
+            onTimeOver()
+        }
+    }, [seconds])
 
     return (
         <div className="flex items-center gap-3">
@@ -95,12 +102,12 @@ function PlayerInfo({ playerInfo, isRight, isTimerRunning }) {
             </div>
             <div className={clsx("h-6 w-px bg-slate-200", isRight && 'order-2')}></div>
             <div className={clsx(
-                "text-gray-400 text-lg font-semibold w-[60px]",
+                "w-16 text-lg font-semibold",
                 isRight && 'order-1',
-                !isTimerRunning && "text-gray-400",
+                isTimerRunning || "text-gray-400",
                 isDanger ? "text-orange-600" : "text-slate-900",)}>
                 {minutesString}:{secondsString}
             </div>
-        </div>
+        </div >
     )
 }

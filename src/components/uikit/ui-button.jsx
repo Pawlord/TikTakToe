@@ -6,7 +6,7 @@ import clsx from "clsx"
  *  children: any,
  *  className: string,
  *  size: 'md' | 'lg',
- *  variang: 'primary' | 'outline'
+ *  variant: 'primary' | 'outline'
  * }} props
  * 
  */
